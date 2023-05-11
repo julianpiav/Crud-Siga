@@ -1,6 +1,7 @@
 package co.edu.unisabana.Siga;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,9 @@ public class Controller {
         this.listaEstudiantes = new ArrayList<>();
     }
     @PostMapping(path = "/estudiante/crear")
-    public void crearEstudiante(@RequestBody Estudiante nuevoEstudiante){
+    public Respuesta crearEstudiante(@RequestBody Estudiante nuevoEstudiante){
         listaEstudiantes.add(nuevoEstudiante);
+        return new Respuesta("Estudiante ingresado correctamente");
     }
     @GetMapping(path = "/estudiantes/todos")
     public List<Estudiante> obtenerEstudiantes(){
@@ -33,16 +35,22 @@ public class Controller {
     }
 
     @PutMapping(path = "/estudiante/actualizar/{codigo}")
-    public void actualizarEstudiante(@PathVariable int codigo, @RequestBody Estudiante estudianteModificado){
+    public Respuesta actualizarEstudiante(@PathVariable int codigo, @RequestBody Estudiante estudianteModificado){
         for(Estudiante estudiante : listaEstudiantes){
             if (estudiante.getCodigo()==codigo){
-                listaEstudiantes.replaceAll(a->a!=estudiante ? a:estudianteModificado);
+                estudiante.setNombre(estudianteModificado.getNombre());
+                estudiante.setSemestre(estudianteModificado.getSemestre());
+                estudiante.setFacultad(estudianteModificado.getFacultad());
+                estudiante.setPrograma(estudianteModificado.getPrograma());
+
             }
         }
+        return new Respuesta("Estudiante actualizado correctamente");
     }
 
     @DeleteMapping(path = "/estudiante/eliminar/{codigo}")
-    public void eliminarEstudiante(@PathVariable int codigo){
+    public Respuesta eliminarEstudiante(@PathVariable int codigo){
         listaEstudiantes.removeIf(estudiante -> estudiante.getCodigo() == codigo);
+        return new Respuesta("Estudiante borrado correctamente");
     }
 }

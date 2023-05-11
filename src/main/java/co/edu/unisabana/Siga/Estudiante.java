@@ -8,15 +8,15 @@ public class Estudiante {
     private int semestre;
 
     private String facultad;
+    private String Programa;
 
-    public Estudiante(String nombre, int codigo, int semestre, String facultad) {
+    public Estudiante(String nombre, int semestre, String facultad, String Programa) {
+        this.codigo= (int) (Math.random() * 1000);
         this.nombre = nombre;
-        this.codigo = codigo;
         this.semestre = semestre;
         this.facultad = facultad;
+        this.Programa = Programa;
     }
-
-
 
     public String getNombre() {
         return nombre;
@@ -47,6 +47,14 @@ public class Estudiante {
 
     public void setFacultad(String facultad) {
         this.facultad = facultad;
+    }
+
+    public String getPrograma() {
+        return Programa;
+    }
+
+    public void setPrograma(String programa) {
+        this.Programa = programa;
     }
 
     @Override
